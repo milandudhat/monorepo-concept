@@ -16,7 +16,7 @@ db.sequelize.authenticate().then(() => {
   Logger.error('Unable to connect to the database:', err);
 });
 
-import { AppModule } from './app/app.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
