@@ -1,0 +1,30 @@
+{
+  "name": "milan",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/milan/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/milan",
+        "main": "libs/milan/src/index.ts",
+        "tsConfig": "libs/milan/tsconfig.lib.json",
+        "assets": ["libs/milan/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs milan {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/milan/**/*.ts", "libs/milan/package.json"]
+      }
+    }
+  },
+  "tags": []
+}

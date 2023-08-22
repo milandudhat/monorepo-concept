@@ -5,6 +5,16 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import db = require('./database/models/index');
+
+db.sequelize.authenticate().then(() => {
+  Logger.log('🚀 Database connection has been established successfully.');
+}).catch((err: any) => {
+  Logger.error('Unable to connect to the database:', err);
+});
 
 import { AppModule } from './app/app.module';
 
