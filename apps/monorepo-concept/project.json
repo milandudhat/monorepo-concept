@@ -1,0 +1,74 @@
+{
+  "name": "monorepo-concept",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/monorepo-concept/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/monorepo-concept",
+        "main": "apps/monorepo-concept/src/main.ts",
+        "tsConfig": "apps/monorepo-concept/tsconfig.app.json",
+        "assets": [
+          "apps/monorepo-concept/src/assets"
+        ],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/monorepo-concept/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "monorepo-concept:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "monorepo-concept:build:development"
+        },
+        "production": {
+          "buildTarget": "monorepo-concept:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/monorepo-concept/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/monorepo-concept/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
