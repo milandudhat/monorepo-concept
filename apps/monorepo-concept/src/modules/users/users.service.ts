@@ -8,4 +8,8 @@ export class UsersService {
     async getAllUsers() {
         return await User.findAll();
     }
+
+    async createUser(body: any) {
+        return await User.create(body);
+    }
 }

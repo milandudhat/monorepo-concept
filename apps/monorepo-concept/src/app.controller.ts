@@ -6,7 +6,7 @@ export class AppController {
   @Get()
   getData() {
     return {
-      message: 'Hello REST API'
+      message: 'Hello REST API SWAGGER DOCS'
     }
   }
 }
