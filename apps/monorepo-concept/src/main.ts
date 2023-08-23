@@ -34,6 +34,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'; // Import these
 import { AppModule } from './app.module';
+import db = require('./database/models/index');
 
 import * as dotenv from 'dotenv';
 import { Logger } from '@nestjs/common';
@@ -53,7 +54,6 @@ async function bootstrap() {
       'This is a sample API created using NestJS and Swagger with JWT Authentication.'
     )
     .setVersion('1.0')
-    .addTag('your-tag') // Add tags if needed
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -62,6 +62,12 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   // ... (rest of your code)
+
+  db.sequelize.authenticate().then(() => {
+  Logger.log('🚀 Database connection has been established successfully.');
+}).catch((err: any) => {
+  Logger.error('Unable to connect to the database:', err);
+});
 
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
